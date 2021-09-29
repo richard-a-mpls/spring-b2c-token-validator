@@ -12,10 +12,10 @@ public class Azureb2ctokenvalidatorApplication {
 	private final static Logger logger = LoggerFactory.getLogger("Application");
 
 	public static void main(String[] args) {
+		SpringApplication.run(Azureb2ctokenvalidatorApplication.class, args);
 		if (System.getenv(Constants.ENV_KEY) == null && System.getenv(Constants.ENV_SECRET) == null) {
 			logger.warn("Enhanced security is not enabled.");
 		}
-		SpringApplication.run(Azureb2ctokenvalidatorApplication.class, args);
 	}
 
 }
