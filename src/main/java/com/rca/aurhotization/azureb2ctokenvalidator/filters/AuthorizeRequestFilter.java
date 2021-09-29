@@ -23,17 +23,13 @@ public class AuthorizeRequestFilter extends GenericFilterBean {
 
         if (key == null && secret == null) {
             // security not configured
-            logger.info("Security not configured");
             SecurityContextHolder.getContext().setAuthentication(
                     getAuthentication("security", "not_configured"));
-            return;
         } else {
             // security configured
             HttpServletRequest req = (HttpServletRequest) servletRequest;
             String securityHeaderSecret = req.getHeader(key);
-            logger.info("check " + securityHeaderSecret + " " + secret);
             if (secret.equals(securityHeaderSecret)) {
-                logger.info("set authentication");
                 SecurityContextHolder.getContext().setAuthentication(getAuthentication(key, secret));
             }
         }
