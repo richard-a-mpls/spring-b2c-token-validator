@@ -4,6 +4,7 @@ import com.rca.aurhotization.azureb2ctokenvalidator.authorization.BasicAuthentic
 import com.rca.aurhotization.azureb2ctokenvalidator.authorization.CredentialsStore;
 import com.rca.aurhotization.azureb2ctokenvalidator.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -17,13 +18,16 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     CredentialsStore credentialsStore;
 
     @Autowired
+    Environment environment;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(new BasicAuthenticationProvider(credentialsStore));
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        if (System.getenv(Constants.ENV_BASIC_SECURITY) != null) {
+        if (environment.containsProperty(Constants.ENV_BASIC_SECURITY)) {
             http.httpBasic().
                     and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                     and().csrf().disable().
