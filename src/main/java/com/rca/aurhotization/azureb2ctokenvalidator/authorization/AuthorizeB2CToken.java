@@ -12,7 +12,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
@@ -31,6 +33,9 @@ public class AuthorizeB2CToken {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     List<JwkProvider> jwkProviderList = new ArrayList<>();
+
+    @Autowired
+    Environment environment;
 
     public TokenModel authorizeToken(String token) throws Exception {
         DecodedJWT decodedJWT = verifyJwtSignature(token);
@@ -102,7 +107,7 @@ public class AuthorizeB2CToken {
         if (tokenModel.getExpires() < currentTime) {
             throw new Exception("Token Expiration validation failed");
         }
-        if (!System.getenv(AUDIENCE_ENV).equals(tokenModel.getAudience())) {
+        if (!environment.getProperty(AUDIENCE_ENV).equals(tokenModel.getAudience())) {
             throw new Exception("Audience validation failed");
         }
     }
