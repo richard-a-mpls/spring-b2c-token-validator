@@ -1,8 +1,8 @@
-package com.rca.aurhotization.azureb2ctokenvalidator.config;
+package com.rca.authorization.azureb2ctokenvalidator.config;
 
-import com.rca.aurhotization.azureb2ctokenvalidator.authorization.BasicAuthenticationProvider;
-import com.rca.aurhotization.azureb2ctokenvalidator.authorization.CredentialsStore;
-import com.rca.aurhotization.azureb2ctokenvalidator.utilities.Constants;
+import com.rca.authorization.azureb2ctokenvalidator.authorization.BasicAuthenticationProvider;
+import com.rca.authorization.azureb2ctokenvalidator.authorization.CredentialsStore;
+import com.rca.authorization.azureb2ctokenvalidator.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

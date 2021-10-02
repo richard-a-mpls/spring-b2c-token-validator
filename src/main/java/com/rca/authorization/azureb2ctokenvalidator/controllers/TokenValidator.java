@@ -1,7 +1,7 @@
-package com.rca.aurhotization.azureb2ctokenvalidator.controllers;
+package com.rca.authorization.azureb2ctokenvalidator.controllers;
 
-import com.rca.aurhotization.azureb2ctokenvalidator.authorization.AuthorizeB2CToken;
-import com.rca.aurhotization.azureb2ctokenvalidator.authorization.TokenModel;
+import com.rca.authorization.azureb2ctokenvalidator.authorization.AuthorizeJwk;
+import com.rca.authorization.azureb2ctokenvalidator.authorization.TokenModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class TokenValidator {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    AuthorizeB2CToken authorizeToken;
+    AuthorizeJwk authorizeToken;
 
     @RequestMapping("/validate")
     public ResponseEntity<TokenModel> validate(@RequestHeader String tokenJwt) {

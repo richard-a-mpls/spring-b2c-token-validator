@@ -1,4 +1,4 @@
-package com.rca.aurhotization.azureb2ctokenvalidator.authorization;
+package com.rca.authorization.azureb2ctokenvalidator.authorization;
 
 import com.auth0.jwk.Jwk;
 import com.auth0.jwk.JwkException;
@@ -10,46 +10,50 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rca.authorization.azureb2ctokenvalidator.cache.TokenCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.interfaces.RSAPublicKey;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
+import java.util.*;
 
 @Service
-@Scope("application")
-public class AuthorizeB2CToken {
+@Scope(WebApplicationContext.SCOPE_APPLICATION)
+public class AuthorizeJwk {
 
-    String AUDIENCE_ENV = "B2C_AUDIENCE";
     String JWK_URL = "JWK_URL";
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     List<JwkProvider> jwkProviderList = new ArrayList<>();
 
     @Autowired
-    Environment environment;
+    TokenCache tokenCache;
 
     public TokenModel authorizeToken(String token) throws Exception {
+        TokenModel tokenModel = null;
+        if (tokenCache.containsToken(token)) {
+            tokenModel = tokenCache.get(token);
+            return tokenModel;
+        }
+
         DecodedJWT decodedJWT = verifyJwtSignature(token);
         String jwtPayload = new String(Base64.getDecoder().decode(decodedJWT.getPayload()));
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        TokenModel tokenModel = null;
+
         try {
             tokenModel = mapper.readValue(jwtPayload, TokenModel.class);
         } catch (JsonProcessingException e) {
             throw new Exception("unable to parse jwt payload");
         }
-        verifyJwtAttributes(tokenModel);
+        tokenCache.verifyAndPut(token, tokenModel);
         return tokenModel;
     }
 
@@ -97,18 +101,5 @@ public class AuthorizeB2CToken {
         }
 
 
-    }
-
-    public void verifyJwtAttributes(TokenModel tokenModel) throws Exception {
-        long currentTime = System.currentTimeMillis()/1000;
-        if (tokenModel.getNotBefore() > currentTime) {
-            throw new Exception("Not Before validation failed");
-        }
-        if (tokenModel.getExpires() < currentTime) {
-            throw new Exception("Token Expiration validation failed");
-        }
-        if (!environment.getProperty(AUDIENCE_ENV).equals(tokenModel.getAudience())) {
-            throw new Exception("Audience validation failed");
-        }
     }
 }

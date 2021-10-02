@@ -1,7 +1,7 @@
-package com.rca.aurhotization.azureb2ctokenvalidator.controllers;
+package com.rca.authorization.azureb2ctokenvalidator.controllers;
 
-import com.rca.aurhotization.azureb2ctokenvalidator.authorization.AuthorizeB2CToken;
-import com.rca.aurhotization.azureb2ctokenvalidator.authorization.TokenModel;
+import com.rca.authorization.azureb2ctokenvalidator.authorization.AuthorizeJwk;
+import com.rca.authorization.azureb2ctokenvalidator.authorization.TokenModel;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 public class TokenValidatorTest {
 
     @Mock
-    AuthorizeB2CToken authorizeB2CToken;
+    AuthorizeJwk authorizeB2CToken;
 
     @InjectMocks
     TokenValidator tokenValidator;

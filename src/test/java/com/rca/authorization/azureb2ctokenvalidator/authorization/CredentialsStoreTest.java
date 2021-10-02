@@ -1,4 +1,4 @@
-package com.rca.aurhotization.azureb2ctokenvalidator.authorization;
+package com.rca.authorization.azureb2ctokenvalidator.authorization;
 
 import org.junit.jupiter.api.Test;
 

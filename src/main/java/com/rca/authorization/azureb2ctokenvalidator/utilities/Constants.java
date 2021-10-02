@@ -1,4 +1,4 @@
-package com.rca.aurhotization.azureb2ctokenvalidator.utilities;
+package com.rca.authorization.azureb2ctokenvalidator.utilities;
 
 public class Constants {
 
