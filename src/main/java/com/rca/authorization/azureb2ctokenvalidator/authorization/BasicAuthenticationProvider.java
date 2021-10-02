@@ -1,7 +1,5 @@
-package com.rca.aurhotization.azureb2ctokenvalidator.authorization;
+package com.rca.authorization.azureb2ctokenvalidator.authorization;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

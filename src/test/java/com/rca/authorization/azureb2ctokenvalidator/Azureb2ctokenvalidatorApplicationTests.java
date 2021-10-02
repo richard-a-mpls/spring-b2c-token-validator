@@ -1,4 +1,4 @@
-package com.rca.aurhotization.azureb2ctokenvalidator;
+package com.rca.authorization.azureb2ctokenvalidator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

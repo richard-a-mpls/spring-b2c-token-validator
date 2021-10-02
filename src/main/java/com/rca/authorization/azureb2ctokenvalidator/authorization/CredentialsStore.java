@@ -1,13 +1,10 @@
-package com.rca.aurhotization.azureb2ctokenvalidator.authorization;
+package com.rca.authorization.azureb2ctokenvalidator.authorization;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.rca.aurhotization.azureb2ctokenvalidator.utilities.Constants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.rca.authorization.azureb2ctokenvalidator.utilities.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
